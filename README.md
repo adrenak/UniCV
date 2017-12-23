@@ -19,4 +19,4 @@ UniCV works on OpenCvSharp and is a modification of this repository : https://so
 # Contact
 [@twitter](https://www.twitter.com/vatsalAmbastha)  
 [@github](https://githib.com/adrenak)  
-[@www](vatsalAmbastha.com)
+[@www](http://www.vatsalAmbastha.com)
