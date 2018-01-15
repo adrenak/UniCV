@@ -8,8 +8,8 @@ namespace UniCV {
         public MeshRenderer processedOutputRenderer;
 
         public int camIndex;
-        public const int camWidth = 1280;
-        public const int camHeight = 720;
+        public int camWidth = 1280;
+        public int camHeight = 720;
 
         public bool showFeed;
 
@@ -35,14 +35,15 @@ namespace UniCV {
 
             if (devices.Length == 0) {
                 Debug.LogError("There are no web cameras connected to this computer. Aborting!");
+                enabled = false;
                 return;
             }
 
             // Attach the web cam feed to a renderer
             mFeedTexture = new WebCamTexture(devices[camIndex].name, camWidth, camHeight);
+
             feedRenderer.material.mainTexture = mFeedTexture;
             mFeedTexture.Play();
-
             mWebCamPixels = new Color32[camWidth * camHeight];
             mProcessedPixels = new Color32[camHeight * camWidth];
 
@@ -63,10 +64,11 @@ namespace UniCV {
         }
     
         void Update() {
-            if (!mFeedTexture.isPlaying || !mFeedTexture.didUpdateThisFrame)
+            if (mFeedTexture == null || !mFeedTexture.isPlaying || !mFeedTexture.didUpdateThisFrame)
                 return;
 
             UnityTextureToCVMat();
+
             if(showFeed)
                 RefreshWindow(mSourceCVMat);
             ProcessAndUpdateUnityTexture(mSourceCVMat);
